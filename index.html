@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chateau Dif Pondy — Homestay Booking</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="#home">Chateau Dif Pondy</a>
+        <nav class="nav" id="mainNav">
+          <a href="#home">Home</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#amenities">Amenities</a>
+          <a href="#map">Location</a>
+          <a href="#attractions">Nearby</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">☰</button>
+      </div>
+    </header>
+
+    <main>
+      <section id="home" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+          <h1>Experience Pondy's Timeless Elegance</h1>
+          <p class="lead">Chateau Dif Pondy — a boutique homestay combining French charm and coastal comfort.</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#contact">Book Now</a>
+            <a class="btn ghost" href="#gallery">Explore Gallery</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="gallery" class="section container">
+        <h2>Gallery</h2>
+        <p class="muted">A glimpse of our rooms and grounds — click to enlarge.</p>
+        <div class="gallery-grid" id="galleryGrid">
+          <img src="https://source.unsplash.com/collection/190727/800x600" alt="Gallery image 1" loading="lazy">
+          <img src="https://source.unsplash.com/collection/190728/800x600" alt="Gallery image 2" loading="lazy">
+          <img src="https://source.unsplash.com/collection/190729/800x600" alt="Gallery image 3" loading="lazy">
+          <img src="https://source.unsplash.com/collection/190730/800x600" alt="Gallery image 4" loading="lazy">
+        </div>
+      </section>
+
+      <section id="amenities" class="section bg-light">
+        <div class="container">
+          <h2>Amenities</h2>
+          <div class="amenities-grid">
+            <div class="amenity">
+              <svg viewBox="0 0 24 24" class="icon"><path d="M12 2l2 7H10l2-7zM4 10h16v10H4z"/></svg>
+              <h3>Comfortable Rooms</h3>
+              <p>Elegant furnishings, premium linens and sea breeze views.</p>
+            </div>
+            <div class="amenity">
+              <svg viewBox="0 0 24 24" class="icon"><path d="M7 10h10v2H7zM5 6h14v2H5zM3 14h18v2H3z"/></svg>
+              <h3>Complimentary Breakfast</h3>
+              <p>Locally-sourced breakfast served daily.</p>
+            </div>
+            <div class="amenity">
+              <svg viewBox="0 0 24 24" class="icon"><path d="M12 3l4 4-4 4-4-4 4-4zM4 13h16v6H4z"/></svg>
+              <h3>Free Wi‑Fi</h3>
+              <p>High-speed internet available throughout the property.</p>
+            </div>
+            <div class="amenity">
+              <svg viewBox="0 0 24 24" class="icon"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zM7 11h10v2H7z"/></svg>
+              <h3>Concierge</h3>
+              <p>Local recommendations, bookings and assistance.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="map" class="section container">
+        <h2>Location</h2>
+        <p class="muted">Find us in scenic Pondicherry — a short walk from the promenade.</p>
+        <div class="map-wrap">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.1234567890123!2d79.8283!3d11.9139!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5363b7abc00001%3A0xdeadbeef00000000!2sPondicherry!5e0!3m2!1sen!2sin!4v1610000000000"
+            style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+      </section>
+
+      <section id="attractions" class="section bg-light">
+        <div class="container">
+          <h2>Nearby Attractions</h2>
+          <div class="cards">
+            <article class="card">
+              <h3>Promenade Beach</h3>
+              <p>Stroll along the coastline and enjoy sunrise views.</p>
+            </article>
+            <article class="card">
+              <h3>French Quarter</h3>
+              <p>Colorful colonial streets full of cafes and galleries.</p>
+            </article>
+            <article class="card">
+              <h3>Aurobindo Ashram</h3>
+              <p>Peaceful spiritual center and gardens.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="section container">
+        <h2>Contact & Booking</h2>
+        <div class="contact-grid">
+          <div>
+            <p><strong>Address:</strong> 12 Rue de la Mer, Pondicherry, India</p>
+            <p><strong>Phone:</strong> +91 98765 43210</p>
+            <p><strong>Email:</strong> stay@chateaudifpondy.example</p>
+            <p class="muted">We respond to WhatsApp bookings quickly — message us to reserve your dates.</p>
+            <a class="btn whatsapp" href="https://wa.me/919876543210?text=Hi%20Chateau%20Dif%20Pondy%20—%20I%20want%20to%20book" target="_blank" rel="noopener">Book via WhatsApp</a>
+          </div>
+
+          <form class="contact-form" onsubmit="event.preventDefault(); alert('Thanks — booking request sent (demo).');">
+            <label>Name<input type="text" name="name" required></label>
+            <label>Email<input type="email" name="email" required></label>
+            <label>Dates<input type="text" name="dates" placeholder="e.g., 2026-08-18 to 2026-08-22"></label>
+            <label>Message<textarea name="message" rows="4"></textarea></label>
+            <button class="btn primary" type="submit">Send Request</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>© Chateau Dif Pondy — All rights reserved</p>
+        <div class="social">
+          <a href="#">Instagram</a>
+          <a href="#">Facebook</a>
+        </div>
+      </div>
+    </footer>
+
+    <div id="lightbox" class="lightbox" aria-hidden="true">
+      <button class="lightbox-close" id="lightboxClose">✕</button>
+      <img src="" alt="Enlarged image" id="lightboxImg">
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
