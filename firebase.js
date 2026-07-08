@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -13,6 +13,22 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-export const auth = getAuth(app);
-export const db = getFirestore(app);
-export const provider = new GoogleAuthProvider();
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+const db = getFirestore(app);
+
+// Exports
+export { auth, db, provider };
+
+// Authentication helper functions (keep auth modular here)
+export async function signInWithGoogle() {
+  return signInWithPopup(auth, provider);
+}
+
+export async function signOutUser() {
+  return signOut(auth);
+}
+
+export function onAuthStateChangedListener(cb) {
+  return onAuthStateChanged(auth, cb);
+}

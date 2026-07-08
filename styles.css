@@ -14,6 +14,14 @@ body{font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;margin:0;color:#111;b
 .nav a{color:#222;text-decoration:none;padding:.5rem .25rem}
 .nav-toggle{display:none;background:none;border:0;font-size:1.5rem}
 
+.auth-area{display:flex;align-items:center;gap:.5rem}
+.auth-area .login-btn{background:transparent;border:1px solid rgba(0,0,0,0.08);padding:.5rem .6rem}
+.auth-area .user{display:flex;align-items:center;gap:.5rem}
+.user-photo{width:36px;height:36px;border-radius:50%;object-fit:cover}
+.user-name{font-weight:600}
+.logout-btn{background:transparent;border:1px solid rgba(0,0,0,0.08);padding:.4rem .6rem}
+.access-denied{color:#fff;background:#dc2626;padding:.4rem .6rem;border-radius:6px;font-weight:700}
+
 .hero{position:relative;min-height:60vh;background-image:linear-gradient(rgba(11,110,79,0.35),rgba(11,110,79,0.2)),url('https://source.unsplash.com/collection/190727/1600x900');background-size:cover;background-position:center;display:flex;align-items:center}
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.15),rgba(0,0,0,0.35))}
 .hero-content{position:relative;color:#fff;padding:4rem}
@@ -63,6 +71,7 @@ body{font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;margin:0;color:#111;b
   .nav-toggle{display:block}
   .hero h1{font-size:1.75rem}
   .gallery-grid img{height:160px}
+  .auth-area{gap:.25rem}
 }
 
 html{scroll-behavior:smooth}
