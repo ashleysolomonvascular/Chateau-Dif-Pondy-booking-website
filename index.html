@@ -17,6 +17,7 @@
           <a href="#home">Home</a>
           <a href="#gallery">Gallery</a>
           <a href="#amenities">Amenities</a>
+          <a href="#details">Details</a>
           <a href="#calendar">Availability</a>
           <a href="#map">Location</a>
           <a href="#attractions">Nearby</a>
@@ -42,7 +43,7 @@
           <h1>Experience Pondy's Timeless Elegance</h1>
           <p class="lead">Chateau Dif Pondy — a boutique homestay combining French charm and coastal comfort.</p>
           <div class="hero-actions">
-            <a class="btn primary" href="#calendar">Book Now</a>
+            <a class="btn primary" href="#details">Book Now</a>
             <a class="btn ghost" href="#gallery">Explore Gallery</a>
           </div>
         </div>
@@ -87,9 +88,33 @@
         </div>
       </section>
 
+      <section id="details" class="section bg-light">
+        <div class="container">
+          <h2>Property Details</h2>
+          <p class="muted">Please read through these details and watch the full video tour before booking — together they cover everything you need to know before you arrive.</p>
+          <div class="details-grid">
+            <ul class="details-list">
+              <li>Located about 15 km from Pondy Rock Beach and 10 km from Auroville Junction.</li>
+              <li>Self-check-in, self-service stay.</li>
+              <li>Non-air-conditioned — the ventilated Italian roof tiles mean AC isn't possible — but well-ventilated with ceiling fans and tower fans for comfort.</li>
+              <li>On windy nights, a little dust may enter through small roof gaps. We minimize this and keep the beds protected with dust covers.</li>
+              <li>Guests are welcome to enjoy drinks anywhere in the house, while smoking is restricted to the outdoors.</li>
+              <li>Have a question we haven't covered? Message us on WhatsApp any time.</li>
+            </ul>
+            <div class="details-video">
+              <div class="video-wrap">
+                <iframe src="https://www.youtube.com/embed/i-70m1kVVsg" title="Chateau Dif Pondy — video tour" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+              <p class="video-caption">Watch the full video tour — it walks through the whole property in detail.</p>
+            </div>
+          </div>
+          <p class="details-reminder">Please make sure you've read the details above and watched the video tour before booking — you'll confirm this in the booking step below.</p>
+        </div>
+      </section>
+
       <section id="calendar" class="section container">
         <h2>Check Availability</h2>
-        <p class="muted">Browse the calendar below to see open dates, then select your check-in and check-out dates to send us a booking request on WhatsApp.</p>
+        <p class="muted">Once you've read the property details and watched the video tour above, browse the calendar below and select your check-in and check-out dates to send us a booking request on WhatsApp.</p>
         <div class="calendar-card">
           <div class="calendar-header">
             <button class="cal-nav-btn" id="calPrevBtn" type="button" aria-label="Previous month">‹</button>
@@ -109,6 +134,10 @@
           <p id="calError" class="cal-error" hidden></p>
           <div class="calendar-footer">
             <p id="calSelectionText" class="muted">Select a check-in date to get started.</p>
+            <div class="booking-confirm">
+              <label class="confirm-check"><input type="checkbox" id="confirmRead"> I have read the <a href="#details">property details</a> above.</label>
+              <label class="confirm-check"><input type="checkbox" id="confirmWatched"> I have watched the video tour.</label>
+            </div>
             <div class="calendar-actions">
               <button class="btn ghost" id="calClearBtn" type="button">Clear</button>
               <button class="btn primary" id="calBookBtn" type="button" disabled>Book Now via WhatsApp</button>
@@ -174,7 +203,7 @@
         <p>© Chateau Dif Pondy — All rights reserved</p>
         <div class="social">
           <a href="#">Instagram</a>
-          <a href="#">Facebook</a>
+          <a href="https://www.facebook.com/share/1BWseDbZpB/?mibextid=wwXlfr" target="_blank" rel="noopener">Facebook</a>
         </div>
       </div>
     </footer>

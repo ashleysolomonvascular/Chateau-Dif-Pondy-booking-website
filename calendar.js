@@ -20,6 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const clearBtn = document.getElementById('calClearBtn');
   const adminHint = document.getElementById('calAdminHint');
   const errorText = document.getElementById('calError');
+  const confirmRead = document.getElementById('confirmRead');
+  const confirmWatched = document.getElementById('confirmWatched');
 
   if (!grid) return;
 
@@ -118,9 +120,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function updateSelectionUI() {
+    const confirmed = confirmRead.checked && confirmWatched.checked;
     if (checkIn && checkOut) {
-      selectionText.textContent = `Check-in: ${formatDisplay(checkIn)} → Check-out: ${formatDisplay(checkOut)}`;
-      bookBtn.disabled = false;
+      if (confirmed) {
+        selectionText.textContent = `Check-in: ${formatDisplay(checkIn)} → Check-out: ${formatDisplay(checkOut)}`;
+        bookBtn.disabled = false;
+      } else {
+        selectionText.textContent = `Check-in: ${formatDisplay(checkIn)} → Check-out: ${formatDisplay(checkOut)}. Please confirm you've read the details and watched the video tour above to continue.`;
+        bookBtn.disabled = true;
+      }
     } else if (checkIn) {
       selectionText.textContent = `Check-in: ${formatDisplay(checkIn)} — now select a check-out date.`;
       bookBtn.disabled = true;
@@ -201,8 +209,11 @@ document.addEventListener('DOMContentLoaded', () => {
     render();
   });
 
+  confirmRead.addEventListener('change', updateSelectionUI);
+  confirmWatched.addEventListener('change', updateSelectionUI);
+
   bookBtn.addEventListener('click', () => {
-    if (!checkIn || !checkOut) return;
+    if (!checkIn || !checkOut || !confirmRead.checked || !confirmWatched.checked) return;
     const message = `Hi Chateau Dif Pondy, I'd like to book a stay from ${formatDisplay(checkIn)} to ${formatDisplay(checkOut)}. Is this available?`;
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank', 'noopener');
