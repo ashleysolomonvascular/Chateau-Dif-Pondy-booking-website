@@ -8,8 +8,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 const ADMIN_EMAIL = 'ashleysolomonvascular@gmail.com';
-// Placeholder — replace with the real WhatsApp number (country code, no + or spaces).
-const WHATSAPP_NUMBER = '919876543210';
+const WHATSAPP_NUMBER = '919789880480';
 
 document.addEventListener('DOMContentLoaded', () => {
   const monthLabel = document.getElementById('calMonthLabel');
