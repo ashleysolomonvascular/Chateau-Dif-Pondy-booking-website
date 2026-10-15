@@ -211,6 +211,12 @@ input[type="number"] {
   border-radius: 999px; background: var(--tile); color: #2A2100; font-weight: 600; font-size: 0.88rem;
   text-decoration: none;
 }
+.fallback { margin-top: 14px; padding: 14px; border-radius: 10px; background: var(--notice-bg); border: 1.5px solid var(--notice-line); color: var(--notice-ink); }
+.fallback p { margin: 0 0 10px; }
+.fb-link, .fb-copy { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 48px; margin: 0 0 10px; border-radius: 10px; font: inherit; font-weight: 700; text-decoration: none; cursor: pointer; }
+.fb-link { background: var(--notice-ink); color: var(--notice-bg); border: 0; }
+.fb-copy { background: transparent; color: var(--notice-ink); border: 2px solid var(--notice-ink); }
+.fb-note { margin: 0; font-size: 0.9rem; }
 .book {
   margin-top: 20px; width: 100%; min-height: 54px; border: 0; border-radius: 12px;
   background: var(--primary); color: var(--on-primary); font: inherit; font-size: 1.05rem; font-weight: 700; cursor: pointer;
@@ -377,18 +383,24 @@ footer a { font-weight: 600; }
             <small>Self-check-in with no caretaker, no AC, dust on windy nights, smoking outdoors only.</small>
           </span>
         </label>
-        <label class="check locked" id="c-video-wrap">
-          <input type="checkbox" id="c-video" disabled>
-          <span>I have watched the video tour
-            <small id="video-hint">Opens after you tap “Open video tour” above.</small>
-            <a class="btn-video-sm" href="https://youtu.be/i-70m1kVVsg?si=_mjwcF4svEFIIQGp" target="_blank" rel="noopener" data-video>Watch it now</a>
+        <label class="check" id="c-details-wrap">
+          <input type="checkbox" id="c-details">
+          <span>I have read the details
+            <small>Sleeping arrangements, how the house runs, rates and the photos above.</small>
+            <a class="btn-video-sm" href="https://youtu.be/i-70m1kVVsg?si=_mjwcF4svEFIIQGp" target="_blank" rel="noopener">Watch the video tour (optional)</a>
           </span>
         </label>
       </div>
 
       <button class="book" id="book" disabled>Send booking request on WhatsApp</button>
       <p class="missing" id="missing"></p>
-      <p class="fine">This sends a request to the host on WhatsApp. Your dates are confirmed once the host replies.</p>
+      <p class="fine">This opens WhatsApp with your request already written. <b>Please press Send in WhatsApp</b> so it reaches the host. Your dates are confirmed once the host replies.</p>
+      <div class="fallback" id="fallback" hidden>
+        <p><b>Did WhatsApp not open?</b> Use either option below.</p>
+        <a class="fb-link" id="fb-link" href="#" target="_blank" rel="noopener">Open WhatsApp chat</a>
+        <button type="button" class="fb-copy" id="fb-copy">Copy my request</button>
+        <p class="fb-note" id="fb-note">Or paste it into a WhatsApp message to <b>+91 97898 80480</b>.</p>
+      </div>
     </div>
   </section>
 </main>
@@ -404,7 +416,8 @@ footer a { font-weight: 600; }
   /* ---------- Settings you can edit ---------- */
   var CONFIG = {
     hostWhatsApp: "919789880480",      // country code + number, digits only
-    blocked: [],                        // booked nights, e.g. "2026-12-24"
+    blocked: ["2026-10-15", "2026-10-16", "2026-10-17", "2026-10-18", "2026-10-19", "2026-10-20", "2026-10-21", "2026-10-22",
+      "2026-11-06", "2026-11-07", "2026-11-08", "2026-11-09", "2026-11-10"],   // booked nights: 15-22 Oct and 6-10 Nov, inclusive                        // booked nights, e.g. "2026-12-24"
     // Special dates, e.g. { from: "2026-11-07", to: "2026-11-10", rate: 5000, label: "Deepavali" }
     // "to" is the last special night. Special nights are priced at "rate" each.
     special: []
@@ -453,7 +466,7 @@ footer a { font-weight: 600; }
   var view = { y: now.getFullYear(), m: now.getMonth() };
   var startMonth = { y: view.y, m: view.m };
   var sel = { start: null, end: null };
-  var guests = 0, guestsTouched = false, videoOpened = false;
+  var guests = 0, guestsTouched = false;
 
   var $ = function (id) { return document.getElementById(id); };
   var daysEl = $("days"), labelEl = $("month-label");
@@ -557,16 +570,7 @@ footer a { font-weight: 600; }
     update();
   });
 
-  document.querySelectorAll("[data-video]").forEach(function (a) {
-    a.addEventListener("click", function () {
-      videoOpened = true;
-      $("c-video").disabled = false;
-      $("c-video-wrap").classList.remove("locked");
-      $("video-hint").textContent = "Tick this once you have watched it.";
-      update();
-    });
-  });
-  ["name", "c-read", "c-video"].forEach(function (id) {
+  ["name", "c-read", "c-details"].forEach(function (id) {
     $(id).addEventListener("input", update);
     $(id).addEventListener("change", update);
   });
@@ -579,7 +583,7 @@ footer a { font-weight: 600; }
     if (!guestsTouched || guests < 1) missing.push("enter the number of guests");
     else if (guests > MAX_GUESTS) missing.push("reduce guests to " + MAX_GUESTS + " or fewer");
     if (!$("c-read").checked) missing.push("confirm you have read the notes");
-    if (!$("c-video").checked) missing.push(videoOpened ? "confirm you have watched the video" : "open and watch the video tour");
+    if (!$("c-details").checked) missing.push("confirm you have read the details");
     $("book").disabled = missing.length > 0;
     $("missing").textContent = missing.length ? "Still to do: " + missing.join(", ") + "." : "";
   }
@@ -597,10 +601,28 @@ footer a { font-weight: 600; }
       "Estimated total: " + money(s.total),
       "",
       "\u2714 I have read the house notes (self-check-in with no caretaker, no AC, dust on windy nights, smoking outdoors only).",
-      "\u2714 I have watched the video tour."
+      "\u2714 I have read the details (sleeping arrangements, how the house runs, rates)."
     ];
-    var url = "https://wa.me/" + CONFIG.hostWhatsApp + "?text=" + encodeURIComponent(lines.join("\n"));
-    window.open(url, "_blank", "noopener");
+    var text = lines.join("\n");
+    var url = "https://wa.me/" + CONFIG.hostWhatsApp + "?text=" + encodeURIComponent(text);
+    $("fb-link").href = url;
+    $("fallback").hidden = false;
+    $("fb-copy").onclick = function () {
+      var done = function () { $("fb-copy").textContent = "Copied. Now paste it in WhatsApp"; };
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text).then(done, legacy); }
+        else { legacy(); }
+      } catch (e) { legacy(); }
+      function legacy() {
+        var t = document.createElement("textarea"); t.value = text; t.style.position = "fixed"; t.style.opacity = "0";
+        document.body.appendChild(t); t.select();
+        try { document.execCommand("copy"); done(); } catch (e) { $("fb-copy").textContent = "Select and copy the message manually"; }
+        document.body.removeChild(t);
+      }
+    };
+    var w = null;
+    try { w = window.open(url, "_blank"); } catch (e) { w = null; }
+    $("fallback").scrollIntoView({ behavior: "smooth", block: "nearest" });
   });
 
   render(); update();
