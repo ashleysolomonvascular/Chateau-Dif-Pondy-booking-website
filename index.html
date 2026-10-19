@@ -223,6 +223,10 @@ input[type="number"] {
 }
 .book:disabled { background: var(--line); color: var(--disabled); cursor: not-allowed; }
 .missing { margin: 10px 0 0; font-size: 0.9rem; color: var(--muted); min-height: 1.4em; }
+.missing.alert { padding: 12px 14px; border-radius: 10px; background: var(--notice-bg); border: 2px solid var(--special); color: var(--notice-ink); font-size: 0.98rem; font-weight: 600; }
+.check.need { border-color: var(--special); background: var(--notice-bg); border-width: 2px; }
+.check.need span { color: var(--notice-ink); }
+.check.need small { color: var(--notice-ink); }
 .fine { margin: 14px 0 0; font-size: 0.88rem; color: var(--muted); }
 
 footer { margin: 36px 0 40px; text-align: center; color: var(--muted); font-size: 0.92rem; }
@@ -392,8 +396,8 @@ footer a { font-weight: 600; }
         </label>
       </div>
 
-      <button class="book" id="book" disabled>Send booking request on WhatsApp</button>
-      <p class="missing" id="missing"></p>
+      <button class="book" id="book" type="button">Send booking request on WhatsApp</button>
+      <p class="missing" id="missing" role="alert" aria-live="polite"></p>
       <p class="fine">This opens WhatsApp with your request already written. <b>Please press Send in WhatsApp</b> so it reaches the host. Your dates are confirmed once the host replies.</p>
       <div class="fallback" id="fallback" hidden>
         <p><b>Did WhatsApp not open?</b> Use either option below.</p>
@@ -575,20 +579,41 @@ footer a { font-weight: 600; }
     $(id).addEventListener("change", update);
   });
 
+  var attempted = false;
+  function getMissing() {
+    var m = [];
+    if (!stay()) m.push({ msg: "choose your check-in and check-out dates", el: $("summary") });
+    if (!$("name").value.trim()) m.push({ msg: "enter your name", el: $("name") });
+    if (!guestsTouched || guests < 1) m.push({ msg: "enter the number of guests", el: $("g-input") });
+    else if (guests > MAX_GUESTS) m.push({ msg: "reduce guests to " + MAX_GUESTS + " or fewer", el: $("g-input") });
+    var r = $("c-read").checked, d = $("c-details").checked;
+    if (!r && !d) m.push({ msg: "tick both boxes to confirm you have read the notes and the details", el: $("c-read") });
+    else if (!r) m.push({ msg: "tick \u201CI have read the notes above\u201D", el: $("c-read") });
+    else if (!d) m.push({ msg: "tick \u201CI have read the details\u201D", el: $("c-details") });
+    return m;
+  }
+  function joinList(a) { return a.length < 2 ? a.join("") : a.slice(0, -1).join(", ") + " and " + a[a.length - 1]; }
   function update() {
     renderSummary();
-    var missing = [];
-    if (!stay()) missing.push("choose check-in and check-out dates");
-    if (!$("name").value.trim()) missing.push("enter your name");
-    if (!guestsTouched || guests < 1) missing.push("enter the number of guests");
-    else if (guests > MAX_GUESTS) missing.push("reduce guests to " + MAX_GUESTS + " or fewer");
-    if (!$("c-read").checked) missing.push("confirm you have read the notes");
-    if (!$("c-details").checked) missing.push("confirm you have read the details");
-    $("book").disabled = missing.length > 0;
-    $("missing").textContent = missing.length ? "Still to do: " + missing.join(", ") + "." : "";
+    var m = getMissing(), box = $("missing");
+    $("c-read").closest(".check").classList.toggle("need", attempted && !$("c-read").checked);
+    $("c-details").closest(".check").classList.toggle("need", attempted && !$("c-details").checked);
+    if (attempted && m.length) {
+      box.className = "missing alert";
+      box.textContent = "Before sending, please " + joinList(m.map(function (x) { return x.msg; })) + ".";
+    } else {
+      box.className = "missing"; box.textContent = "";
+    }
   }
 
   $("book").addEventListener("click", function () {
+    var m = getMissing();
+    if (m.length) {
+      attempted = true; update();
+      var target = (m[0].el.type === "checkbox") ? $("missing") : m[0].el;
+      try { target.scrollIntoView({ behavior: "smooth", block: "center" }); } catch (e) {}
+      return;
+    }
     var s = stay(); if (!s) return;
     var lines = [
       "Hello! I'd like to book Chateau Dif Pondy.",
