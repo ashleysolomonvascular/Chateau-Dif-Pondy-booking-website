@@ -211,6 +211,9 @@ input[type="number"] {
   border-radius: 999px; background: var(--tile); color: #2A2100; font-weight: 600; font-size: 0.88rem;
   text-decoration: none;
 }
+.thanks { margin-top: 14px; padding: 16px; border-radius: 10px; background: #e7f6ec; border: 1.5px solid #2e9e5b; color: #14532d; }
+.thanks h3 { margin: 0 0 4px; font-size: 1.05rem; }
+.thanks p { margin: 0; }
 .fallback { margin-top: 14px; padding: 14px; border-radius: 10px; background: var(--notice-bg); border: 1.5px solid var(--notice-line); color: var(--notice-ink); }
 .fallback p { margin: 0 0 10px; }
 .fb-link, .fb-copy { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 48px; margin: 0 0 10px; border-radius: 10px; font: inherit; font-weight: 700; text-decoration: none; cursor: pointer; }
@@ -399,6 +402,10 @@ footer a { font-weight: 600; }
       <button class="book" id="book" type="button">Send booking request on WhatsApp</button>
       <p class="missing" id="missing" role="alert" aria-live="polite"></p>
       <p class="fine">This opens WhatsApp with your request already written. <b>Please press Send in WhatsApp</b> so it reaches the host. Your dates are confirmed once the host replies.</p>
+      <div class="thanks" id="thanks" hidden role="status">
+        <h3>Thank you! Your WhatsApp request has been sent.</h3>
+        <p>Ashley will reply shortly to confirm your dates.</p>
+      </div>
       <div class="fallback" id="fallback" hidden>
         <p><b>Did WhatsApp not open?</b> Use either option below.</p>
         <a class="fb-link" id="fb-link" href="#" target="_blank" rel="noopener">Open WhatsApp chat</a>
@@ -647,7 +654,9 @@ footer a { font-weight: 600; }
     };
     var w = null;
     try { w = window.open(url, "_blank"); } catch (e) { w = null; }
-    $("fallback").scrollIntoView({ behavior: "smooth", block: "nearest" });
+    $("thanks").hidden = false;
+    try { if (window.gtag) { window.gtag("event", "booking_request_sent"); } } catch (e) {}
+    $("thanks").scrollIntoView({ behavior: "smooth", block: "nearest" });
   });
 
   render(); update();
